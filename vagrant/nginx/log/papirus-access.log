@@ -1,0 +1,3 @@
+192.168.11.1 - - [22/Dec/2018:13:11:33 +0000] "GET / HTTP/1.1" 304 0 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36"
+192.168.11.1 - - [22/Dec/2018:13:11:33 +0000] "GET /css/app.css HTTP/1.1" 304 0 "http://rabbit.loc/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36"
+192.168.11.1 - - [22/Dec/2018:13:11:33 +0000] "GET /js/app.js HTTP/1.1" 304 0 "http://rabbit.loc/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36"
