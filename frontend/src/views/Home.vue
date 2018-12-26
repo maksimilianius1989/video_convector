@@ -1,12 +1,12 @@
 <template>
   <div class="home">
-    <div class="jumbotron">
-      <h1>Welcom to App</h1>
-      <p>
-        Working...
-      </p>
-      <ApiStatus/>
-    </div>
+      <div class="jumbotron">
+        <h1>Welcome to App</h1>
+        <p>
+          Congratulations! You have successfully created new application.
+        </p>
+        <ApiStatus/>
+      </div>
   </div>
 </template>
 
@@ -27,7 +27,7 @@ export default {
     padding: 2rem;
 
     p:last-of-type {
-      margin-botton: 0;
+      margin-bottom: 0;
     }
   }
 </style>

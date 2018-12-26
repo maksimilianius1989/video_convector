@@ -23,25 +23,25 @@
   import Nav from '@/components/Nav.vue'
 
   export default {
-      components: {
-          Nav
-      }
+    components: {
+      Nav
+    }
   }
 </script>
 
 <style lang="scss">
-body {
-  min-height: 100vh;
-}
+  body {
+    min-height: 100vh;
+  }
 
-#app {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
+  #app {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column
+  }
 
-.app-content {
-  flex: 1;
-  padding: 1rem 0;
-}
+  .app-content {
+    flex: 1;
+    padding: 1rem 0;
+  }
 </style>
