@@ -30,6 +30,7 @@
 </script>
 
 <style lang="scss">
+  @import "assets/scss/variables";
   @import "~bootstrap/dist/css/bootstrap.css";
   @import "~bootstrap-vue/dist/bootstrap-vue.css";
   @import "~@fortawesome/fontawesome-free/css/all.css";
