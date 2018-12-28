@@ -7,10 +7,13 @@ use Api\Http\Action;
 chdir(dirname(__DIR__));
 require 'vendor/autoload.php';
 
-$config = require 'config/config.php';
-$container = new \Slim\Container($config);
-$app = new \Slim\App($container);
+if (file_exists('.env')) {
+    (new \Symfony\Component\Dotenv\Dotenv())->load('.env');
+}
 
-$app->get('/', Action\HomeAction::class . ':handle');
-
-$app->run();
+(function () {
+    $container = require 'config/container.php';
+    $app = new \Slim\App($container);
+    (require 'config/routes.php')($app);
+    $app->run();
+})();
