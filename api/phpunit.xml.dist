@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
          bootstrap="vendor/autoload.php"
@@ -10,12 +10,12 @@
     </testsuites>
 
     <filter>
-        <whilelist processUncoveredFilesFromWhitelist="true">
+        <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">./src</directory>
-        </whilelist>
+        </whitelist>
     </filter>
 
     <php>
-        <env name="APP_DEBUG" value="1" />
+        <env name="APP_DEBUG" value="1"/>
     </php>
 </phpunit>
