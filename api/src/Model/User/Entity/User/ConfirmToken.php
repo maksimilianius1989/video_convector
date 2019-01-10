@@ -20,8 +20,18 @@ class ConfirmToken
         $this->expires = $expires;
     }
 
+    public function isEqualTo(string $token): bool
+    {
+        return $this->token === $token;
+    }
+
     public function isExpiredTo(DateTimeImmutable $date): bool
     {
         return $this->expires <= $date;
+    }
+
+    public function getToken(): string
+    {
+        return $this->token;
     }
 }
