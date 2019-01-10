@@ -9,9 +9,9 @@ use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\App;
-use Slim\Http\Uri;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\ServerRequest;
+use Zend\Diactoros\Uri;
 
 class WebTestCase extends TestCase
 {
