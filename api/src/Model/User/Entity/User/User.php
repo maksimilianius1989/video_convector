@@ -1,16 +1,13 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Api\Model\User\Entity\User;
-
-
-use DateTimeImmutable;
-use DomainException;
 
 class User
 {
     private const STATUS_WAIT = 'wait';
-    private const STAUTS_ACTIVE = 'active';
+    private const STATUS_ACTIVE = 'active';
 
     private $id;
     private $date;
@@ -35,17 +32,19 @@ class User
         $this->status = self::STATUS_WAIT;
     }
 
-    public function confirmSignup(string $token, DateTimeImmutable $date): void
+    public function confirmSignup(string $token, \DateTimeImmutable $date): void
     {
         if ($this->isActive()) {
-            throw new DomainException('User is already active.');
+            throw new \DomainException('User is already active.');
         }
         if (!$this->confirmToken->isEqualTo($token)) {
-            throw new DomainException('Confirm token is invalid.');
+            throw new \DomainException('Confirm token is invalid.');
         }
         if ($this->confirmToken->isExpiredTo($date)) {
-            throw new DomainException('Confirm token is expired.');
+            throw new \DomainException('Confirm token is expired.');
         }
+        $this->status = self::STATUS_ACTIVE;
+        $this->confirmToken = null;
     }
 
     public function isWait(): bool
@@ -55,7 +54,7 @@ class User
 
     public function isActive(): bool
     {
-        return $this->status === self::STAUTS_ACTIVE;
+        return $this->status === self::STATUS_ACTIVE;
     }
 
     public function getId(): UserId
@@ -63,7 +62,7 @@ class User
         return $this->id;
     }
 
-    public function getDate(): DateTimeImmutable
+    public function getDate(): \DateTimeImmutable
     {
         return $this->date;
     }
@@ -73,21 +72,13 @@ class User
         return $this->email;
     }
 
-    /**
-     * @return string
-     */
     public function getPasswordHash(): string
     {
         return $this->passwordHash;
     }
 
-    /**
-     * @return ConfirmToken
-     */
     public function getConfirmToken(): ?ConfirmToken
     {
         return $this->confirmToken;
     }
-
-
 }

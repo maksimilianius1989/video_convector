@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Api\Model\User\Entity\User;
 
-
-use DateTimeImmutable;
 use Webmozart\Assert\Assert;
 
 class ConfirmToken
@@ -13,7 +11,7 @@ class ConfirmToken
     private $token;
     private $expires;
 
-    public function __construct(string $token, DateTimeImmutable $expires)
+    public function __construct(string $token, \DateTimeImmutable $expires)
     {
         Assert::notEmpty($token);
         $this->token = $token;
@@ -25,7 +23,7 @@ class ConfirmToken
         return $this->token === $token;
     }
 
-    public function isExpiredTo(DateTimeImmutable $date): bool
+    public function isExpiredTo(\DateTimeImmutable $date): bool
     {
         return $this->expires <= $date;
     }

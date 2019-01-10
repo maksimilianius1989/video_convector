@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-use Api\Http\Action;
+use Symfony\Component\Dotenv\Dotenv;
 
 chdir(dirname(__DIR__));
 require 'vendor/autoload.php';
 
 if (file_exists('.env')) {
-    (new \Symfony\Component\Dotenv\Dotenv())->load('.env');
+    (new Dotenv())->load('.env');
 }
 
 (function () {

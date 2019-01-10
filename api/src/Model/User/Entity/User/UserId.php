@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Api\Model\User\Entity\User;
-
 
 use Ramsey\Uuid\Uuid;
 use Webmozart\Assert\Assert;

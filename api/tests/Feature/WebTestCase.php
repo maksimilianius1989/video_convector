@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Api\Test\Feature;
-
 
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
@@ -15,12 +15,12 @@ use Zend\Diactoros\Uri;
 
 class WebTestCase extends TestCase
 {
-    protected function get (string $uri): ResponseInterface
+    protected function get(string $uri): ResponseInterface
     {
         return $this->method($uri, 'GET');
     }
 
-    protected function method (string $uri, $method): ResponseInterface
+    protected function method(string $uri, $method): ResponseInterface
     {
         return $this->request(
             (new ServerRequest())
@@ -29,7 +29,7 @@ class WebTestCase extends TestCase
         );
     }
 
-    protected function request (ServerRequestInterface $request): ResponseInterface
+    protected function request(ServerRequestInterface $request): ResponseInterface
     {
         $response = $this->app()->process($request, new Response());
         $response->getBody()->rewind();
