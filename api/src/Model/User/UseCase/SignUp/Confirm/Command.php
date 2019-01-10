@@ -2,8 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Api\Model\User\Entity\UseCase\SignUp\Confirm;
-
+namespace Api\Model\User\UseCase\SignUp\Confirm;
 
 class Command
 {

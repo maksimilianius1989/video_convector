@@ -1,11 +1,10 @@
 <?php
 
+declare(strict_types=1);
 
-namespace Api\Model\User\Entity\UseCase\SignUp\Confirm;
-
+namespace Api\Model\User\UseCase\SignUp\Confirm;
 
 use Api\Model\Flusher;
-use DateTimeImmutable;
 use Api\Model\User\Entity\User\Email;
 use Api\Model\User\Entity\User\UserRepository;
 
@@ -24,7 +23,7 @@ class Handler
     {
         $user = $this->users->getByEmail(new Email($command->email));
 
-        $user->confirmSignup($command->token, new DateTimeImmutable());
+        $user->confirmSignup($command->token, new \DateTimeImmutable());
 
         $this->flusher->flush();
     }

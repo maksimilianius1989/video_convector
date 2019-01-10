@@ -23,7 +23,7 @@ class ConfirmToken
         if (!$this->isEqualTo($token)) {
             throw new \DomainException('Confirm token is invalid.');
         }
-        if (!$this->isExpiredTo($date)) {
+        if ($this->isExpiredTo($date)) {
             throw new \DomainException('Confirm token is expired.');
         }
     }
@@ -33,7 +33,7 @@ class ConfirmToken
         return $this->token === $token;
     }
 
-    public function isExpiredTo(\DateTimeImmutable $date): bool
+    private function isExpiredTo(\DateTimeImmutable $date): bool
     {
         return $this->expires <= $date;
     }

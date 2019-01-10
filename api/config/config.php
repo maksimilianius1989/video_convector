@@ -6,6 +6,8 @@ use Api\Http\Action;
 use Doctrine\Common\Cache\FilesystemCache;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Tools\Setup;
+use Psr\Container\ContainerInterface;
 
 return [
     'settings' => [
@@ -17,9 +19,9 @@ return [
         return new Action\HomeAction();
     },
 
-    EntityManagerInterface::class => function  (\Psr\Container\ContainerInterface $container) {
+    EntityManagerInterface::class => function (ContainerInterface $container) {
         $params = $container['config']['doctrine'];
-        $config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
+        $config = Setup::createAnnotationMetadataConfiguration(
             $params['metadata_dirs'],
             $params['dev_mode'],
             $params['cache_dir'],
@@ -38,7 +40,7 @@ return [
         'doctrine' => [
             'dev_mode' => true,
             'cache_dir' => 'var/cache/doctrine',
-            'metadata_dirs' => ['src/Mode/User/Entity'],
+            'metadata_dirs' => ['src/Model/User/Entity'],
             'connection' => [
                 'url' => getenv('API_DB_URL'),
             ],

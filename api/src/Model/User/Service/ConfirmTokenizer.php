@@ -1,6 +1,6 @@
 <?php
 
-declare(strint_type=1);
+declare(strict_types=1);
 
 namespace Api\Model\User\Service;
 
