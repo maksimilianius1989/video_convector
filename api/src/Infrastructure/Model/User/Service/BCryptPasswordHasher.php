@@ -1,11 +1,10 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Api\Infrastructure\Model\User\Service;
 
-
 use Api\Model\User\Service\PasswordHasher;
-use RuntimeException;
 
 class BCryptPasswordHasher implements PasswordHasher
 {
@@ -20,7 +19,7 @@ class BCryptPasswordHasher implements PasswordHasher
     {
         $hash = password_hash($password, PASSWORD_BCRYPT, ['cost' => $this->cost]);
         if ($hash === false) {
-            throw new RuntimeException('Unable to generate hash.');
+            throw new \RuntimeException('Unable to generate hash.');
         }
         return $hash;
     }

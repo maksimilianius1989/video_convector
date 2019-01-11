@@ -40,18 +40,18 @@ class WebTestCase extends TestCase
         return $response;
     }
 
-    protected function loadFixtures (array $fixtures): void
+    protected function loadFixtures(array $fixtures): void
     {
         $container = $this->container();
         $em = $container->get(EntityManagerInterface::class);
         $loader = new Loader();
         foreach ($fixtures as $class) {
             if ($container->has($class)) {
-                $fixtures = $container->get($class);
+                $fixture = $container->get($class);
             } else {
-                $fixtures = new $class;
+                $fixture = new $class;
             }
-            $loader->addFixture($fixtures);
+            $loader->addFixture($fixture);
         }
         $executor = new ORMExecutor($em, new ORMPurger($em));
         $executor->execute($loader->getFixtures());

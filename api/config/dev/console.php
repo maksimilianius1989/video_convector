@@ -1,11 +1,13 @@
 <?php
 
-use Api\Console\Command\FixtureCommand;
+use Api\Console\Command;
+use Doctrine\ORM\EntityManagerInterface;
+use Psr\Container\ContainerInterface;
 
 return [
-    FixtureCommand::class => function  (\Psr\Container\ContainerInterface $container) {
-        return new FixtureCommand(
-            $container->get(\Doctrine\ORM\EntityManagerInterface::class),
+    Command\FixtureCommand::class => function (ContainerInterface $container) {
+        return new Command\FixtureCommand(
+            $container->get(EntityManagerInterface::class),
             'src/Data/Fixture'
         );
     },
@@ -13,7 +15,7 @@ return [
     'config' => [
         'console' => [
             'commands' => [
-                FixtureCommand::class,
+                Command\FixtureCommand::class,
             ],
         ],
     ],

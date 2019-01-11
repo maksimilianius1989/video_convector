@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Api\Console\Command;
-
 
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Loader;
@@ -24,14 +22,15 @@ class FixtureCommand extends Command
         $this->path = $path;
     }
 
-    protected function configure (): void
+    protected function configure(): void
     {
         $this
             ->setName('fixtures:load')
-            ->setDescription('Load fixtures');
+            ->setDescription('Load fixtures')
+        ;
     }
 
-    protected function execute (InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('<comment>Loading fixtures</comment>');
 
@@ -49,3 +48,4 @@ class FixtureCommand extends Command
         $output->writeln('<info>Done!</info>');
     }
 }
+

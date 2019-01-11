@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-
 namespace Api\Infrastructure\Model\Service;
-
 
 use Api\Model\Flusher;
 use Doctrine\ORM\EntityManagerInterface;
