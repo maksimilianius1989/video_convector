@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 use Zend\ConfigAggregator\ConfigAggregator;
 use Zend\ConfigAggregator\PhpFileProvider;
-use Slim\Container;
 
 $aggregator = new ConfigAggregator([
     new PhpFileProvider(__DIR__ . '/common/*.php'),
@@ -13,4 +12,4 @@ $aggregator = new ConfigAggregator([
 
 $config = $aggregator->getMergedConfig();
 
-return new Container($config);
+return new \Slim\Container($config);

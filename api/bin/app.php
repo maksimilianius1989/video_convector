@@ -1,15 +1,12 @@
 #!/usr/bin/env php
 <?php
 
-
 declare(strict_types=1);
 
-use Doctrine\DBAL\Migrations\Tools\Console\ConsoleRunner as ToolsConsoleRunner;
 use Doctrine\DBAL\Migrations\Tools\Console\Helper\ConfigurationHelper;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Tools\Console\ConsoleRunner;
 use Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper;
-use PharIo\Manifest\Application;
+use Symfony\Component\Console\Application;
 use Symfony\Component\Dotenv\Dotenv;
 
 chdir(dirname(__DIR__));
@@ -36,8 +33,8 @@ $configuration->setMigrationsNamespace('Api\Data\Migration');
 $cli->getHelperSet()->set(new EntityManagerHelper($entityManager), 'em');
 $cli->getHelperSet()->set(new ConfigurationHelper($connection, $configuration), 'configuration');
 
-ConsoleRunner::addCommands($cli);
-ToolsConsoleRunner::addCommands($cli);
+Doctrine\ORM\Tools\Console\ConsoleRunner::addCommands($cli);
+Doctrine\DBAL\Migrations\Tools\Console\ConsoleRunner::addCommands($cli);
 
 $commands = $container->get('config')['console']['commands'];
 foreach ($commands as $command) {

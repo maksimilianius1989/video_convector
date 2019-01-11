@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace Api\Model\User\Entity\User;
 
+use Doctrine\ORM\Mapping as ORM;
+
 /**
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
- * @ORM\Table(name="user_users", uniqueConstrains={
- *     @ORM\UniqueConstraint(colums={"email"})})
+ * @ORM\Table(name="user_users", uniqueConstraints={
+ *     @ORM\UniqueConstraint(columns={"email"})
+ * })
  */
 class User
 {

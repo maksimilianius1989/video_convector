@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Api\Infrastructure\Doctrine\Type\User;
-
 
 use Api\Model\User\Entity\User\UserId;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
@@ -22,8 +22,7 @@ class UserIdType extends GuidType
         return !empty($value) ? new UserId($value) : null;
     }
 
-    public function getName(): string
-    {
+    public function getName(): string {
         return self::NAME;
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Api\Model\User\Entity\User;
 
+use Doctrine\ORM\Mapping as ORM;
 use Webmozart\Assert\Assert;
 
 /**

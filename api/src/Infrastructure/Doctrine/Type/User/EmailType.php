@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Api\Infrastructure\Doctrine\Type\User;
-
 
 use Api\Model\User\Entity\User\Email;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
@@ -22,8 +22,7 @@ class EmailType extends StringType
         return !empty($value) ? new Email($value) : null;
     }
 
-    public function getName(): string
-    {
+    public function getName(): string {
         return self::NAME;
     }
 }

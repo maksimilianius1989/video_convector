@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-use Api\Infrastructure\Doctrine\Type\User\EmailType;
-use Api\Infrastructure\Doctrine\Type\User\UserIdType;
+use Api\Infrastructure\Doctrine\Type;
 use Doctrine\Common\Cache\FilesystemCache;
-use Doctrine\DBAL\Types\Type;
+use Doctrine\DBAL;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\Setup;
@@ -24,8 +23,8 @@ return [
             false
         );
         foreach ($params['types'] as $type => $class) {
-            if (!Type::hasType($type)) {
-                Type::addType($type, $class);
+            if (!DBAL\Types\Type::hasType($type)) {
+                DBAL\Types\Type::addType($type, $class);
             }
         }
         return EntityManager::create(
@@ -43,8 +42,8 @@ return [
                 'url' => getenv('API_DB_URL'),
             ],
             'types' => [
-                UserIdType::NAME => UserIdType::class,
-                EmailType::NAME => EmailType::class,
+                Type\User\UserIdType::NAME => Type\User\UserIdType::class,
+                Type\User\EmailType::NAME => Type\User\EmailType::class,
             ],
         ],
     ],
