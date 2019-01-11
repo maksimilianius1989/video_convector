@@ -4,6 +4,11 @@
 
 declare(strict_types=1);
 
+use Doctrine\DBAL\Migrations\Tools\Console\ConsoleRunner as ToolsConsoleRunner;
+use Doctrine\DBAL\Migrations\Tools\Console\Helper\ConfigurationHelper;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Tools\Console\ConsoleRunner;
+use Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper;
 use PharIo\Manifest\Application;
 use Symfony\Component\Dotenv\Dotenv;
 
@@ -20,6 +25,19 @@ if (file_exists('.env')) {
 $container = require 'config/container.php';
 
 $cli = new Application('Application console');
+
+$entityManager = $container->get(EntityManagerInterface::class);
+$connection = $entityManager->getConnection();
+
+$configuration = new Doctrine\DBAL\Migrations\Configuration\Configuration($connection);
+$configuration->setMigrationsDirectory('src/Data/Migration');
+$configuration->setMigrationsNamespace('Api\Data\Migration');
+
+$cli->getHelperSet()->set(new EntityManagerHelper($entityManager), 'em');
+$cli->getHelperSet()->set(new ConfigurationHelper($connection, $configuration), 'configuration');
+
+ConsoleRunner::addCommands($cli);
+ToolsConsoleRunner::addCommands($cli);
 
 $commands = $container->get('config')['console']['commands'];
 foreach ($commands as $command) {
