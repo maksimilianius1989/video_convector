@@ -12,7 +12,7 @@ axios.defaults.baseURL = process.env.VUE_APP_API_URL;
 Vue.use(BootstrapVue);
 
 new Vue({
-    router,
-    store,
-    render: h => h(App)
+  router,
+  store,
+  render: h => h(App)
 }).$mount('#app');
