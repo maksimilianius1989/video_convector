@@ -25,7 +25,7 @@ class WebTestCase extends TestCase
         return $this->method($uri, 'GET');
     }
 
-    protected function post (string $uri, array $params = []): ResponseInterface
+    protected function post(string $uri, array $params = []): ResponseInterface
     {
         return $this->method($uri, 'POST', $params);
     }

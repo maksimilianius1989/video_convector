@@ -1,14 +1,14 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Api\Test\Feature\Auth\SignUp;
-
 
 use Api\Test\Feature\WebTestCase;
 
 class RequestTest extends WebTestCase
 {
-    protected function setUp (): void
+    protected function setUp(): void
     {
         $this->loadFixtures([
             RequestFixture::class,
@@ -22,8 +22,8 @@ class RequestTest extends WebTestCase
         $response = $this->get('/auth/signup');
         self::assertEquals(405, $response->getStatusCode());
     }
-    
-    public function testSuccess(): void 
+
+    public function testSuccess(): void
     {
         $response = $this->post('/auth/signup', [
             'email' => 'test-mail@example.com',
@@ -36,11 +36,11 @@ class RequestTest extends WebTestCase
         $data = json_decode($content, true);
 
         self::assertEquals([
-            'email' => 'test-email@example.com',
+            'email' => 'test-mail@example.com',
         ], $data);
     }
-    
-    public function testExisting(): void 
+
+    public function testExisting(): void
     {
         $response = $this->post('/auth/signup', [
             'email' => 'test@example.com',

@@ -13,6 +13,8 @@ use Psr\Container\ContainerInterface;
 return [
     EntityManagerInterface::class => function (ContainerInterface $container) {
         $params = $container['config']['doctrine'];
+/*        print_r($params);
+        die;*/
         $config = Setup::createAnnotationMetadataConfiguration(
             $params['metadata_dirs'],
             $params['dev_mode'],

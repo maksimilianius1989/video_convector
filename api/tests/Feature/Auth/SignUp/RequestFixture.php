@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Api\Test\Feature\Auth\SignUp;
-
 
 use Api\Model\User\Entity\User\ConfirmToken;
 use Api\Model\User\Entity\User\Email;
@@ -13,13 +13,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 class RequestFixture extends AbstractFixture
 {
-
-    /**
-     * Load data fixtures with the passed EntityManager
-     *
-     * @param ObjectManager $manager
-     */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $user = new User(
             UserId::next(),
