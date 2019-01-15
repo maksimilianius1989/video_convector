@@ -29,18 +29,18 @@ return [
         return new UserInfrastructure\Service\RandConfirmTokenizer(new \DateInterval($interval));
     },
 
-    UserModel\Entity\User\UserRepository::class => function  (ContainerInterface $container) {
+    UserModel\Entity\User\UserRepository::class => function (ContainerInterface $container) {
         return new UserInfrastructure\Entity\DoctrineUserRepository(
-            $container->get(EntityManagerInterface::class)
+            $container->get(\Doctrine\ORM\EntityManagerInterface::class)
         );
     },
 
-    UserModel\UseCase\SignUp\Request\Handler::class => function  (ContainerInterface $container) {
+    UserModel\UseCase\SignUp\Request\Handler::class => function (ContainerInterface $container) {
         return new UserModel\UseCase\SignUp\Request\Handler(
             $container->get(UserModel\Entity\User\UserRepository::class),
             $container->get(UserModel\Service\PasswordHasher::class),
             $container->get(UserModel\Service\ConfirmTokenizer::class),
-            $container->get(\Api\Model\Flusher::class)
+            $container->get(Api\Model\Flusher::class)
         );
     },
 
