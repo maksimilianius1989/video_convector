@@ -1,14 +1,14 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Api\Test\Feature\Auth\SignUp;
-
 
 use Api\Test\Feature\WebTestCase;
 
 class ConfirmTest extends WebTestCase
 {
-    protected function setUp (): void
+    protected function setUp(): void
     {
         $this->loadFixtures([
             ConfirmFixture::class,

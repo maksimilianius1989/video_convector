@@ -19,11 +19,6 @@ class CallableRequestHandler implements RequestHandlerInterface
         $this->response = $response;
     }
 
-    /**
-     * Handles a request and produces a response.
-     *
-     * May call other collaborating code to generate the response.
-     */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         return ($this->callable)($request, $this->response);
