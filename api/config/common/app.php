@@ -7,6 +7,10 @@ use Api\Model;
 use Psr\Container\ContainerInterface;
 
 return [
+    \Api\Http\Middleware\DomainExceptionMiddleware::class => function  () {
+        return new Api\Http\Middleware\DomainExceptionMiddleware();
+    },
+
     Action\HomeAction::class => function () {
         return new Action\HomeAction();
     },
