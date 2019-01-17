@@ -26,7 +26,7 @@ class RequestAction implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $body = json_decode($request->getBody()->getContents(), true);
+        $body = $this->deserialize($request);
 
         $command = new Command();
 
@@ -42,5 +42,17 @@ class RequestAction implements RequestHandlerInterface
         return new JsonResponse([
             'email' => $command->email,
         ], 201);
+    }
+
+    private function deserialize(ServerRequestInterface $request): Command
+    {
+        $body = $request->getParsedBody();
+
+        $command = new Command();
+
+        $command->email = $body['email'] ?? '';
+        $command->password = $body['password'] ?? '';
+
+        return $command;
     }
 }
