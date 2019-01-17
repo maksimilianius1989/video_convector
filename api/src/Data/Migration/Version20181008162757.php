@@ -8,7 +8,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20190111145055 extends AbstractMigration
+final class Version20181008162757 extends AbstractMigration
 {
     public function up(Schema $schema) : void
     {
@@ -26,7 +26,6 @@ final class Version20190111145055 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'postgresql', 'Migration can only be executed safely on \'postgresql\'.');
 
-        $this->addSql('CREATE SCHEMA public');
         $this->addSql('DROP TABLE user_users');
     }
 }

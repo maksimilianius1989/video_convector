@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Api\Http\Validator;
-
 
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 

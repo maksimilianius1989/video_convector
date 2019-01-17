@@ -51,7 +51,7 @@ class ConfirmTest extends WebTestCase
         $data = json_decode($content, true);
 
         self::assertEquals([
-            'errrors' => [
+            'errors' => [
                 'email' => 'This value is not a valid email address.',
                 'token' => 'This value should not be blank.',
 
