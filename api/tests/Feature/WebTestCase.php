@@ -36,14 +36,12 @@ class WebTestCase extends TestCase
         $body->write(json_encode($params));
         $body->rewind();
 
-        $request = $this->request(
-            (new ServerRequest())
-                ->withHeader('Content-Type', 'application/json')
-                ->withHeader('Accept', 'application/json')
-                ->withUri(new Uri('http://test' . $uri))
-                ->withMethod($method)
-                ->withBody($body)
-        );
+        $request = (new ServerRequest())
+            ->withHeader('Content-Type', 'application/json')
+            ->withHeader('Accept', 'application/json')
+            ->withUri(new Uri('http://test' . $uri))
+            ->withMethod($method)
+            ->withBody($body);
 
         foreach ($headers as $name => $value) {
             $request = $request->withHeader($name, $value);
