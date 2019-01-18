@@ -1,13 +1,14 @@
 <?php
 
-use Geekdevs\SwiftMailer\Transport\FileTransport;
+declare(strict_types=1);
+
 use Psr\Container\ContainerInterface;
 
 return [
-    Swift_Mailer::class => function  (ContainerInterface $container) {
+    Swift_Mailer::class => function (ContainerInterface $container) {
         $config = $container->get('config')['mailer'];
-        $transport = new FileTransport(
-            new Swift_Events_SimpleEventDispatcher(),
+        $transport = new \Geekdevs\SwiftMailer\Transport\FileTransport(
+            new \Swift_Events_SimpleEventDispatcher(),
             $config['local_path']
         );
         return new Swift_Mailer($transport);

@@ -26,12 +26,7 @@ class RequestAction implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $body = $this->deserialize($request);
-
-        $command = new Command();
-
-        $command->email = $body['email'] ?? '';
-        $command->password = $body['password'] ?? '';
+        $command = $this->deserialize($request);
 
         if ($errors = $this->validator->validate($command)) {
             throw new ValidationException($errors);

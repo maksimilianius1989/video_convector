@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Api\Test\Builder\User;
-
 
 use Api\Model\User\Entity\User\ConfirmToken;
 use Api\Model\User\Entity\User\Email;
@@ -33,7 +33,7 @@ class UserBuilder
         return $clone;
     }
 
-    public function withDate(\DateTimeInterface $date): self
+    public function withDate(\DateTimeImmutable $date): self
     {
         $clone = clone $this;
         $clone->date = $date;

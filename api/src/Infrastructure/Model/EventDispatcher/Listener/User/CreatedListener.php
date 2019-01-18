@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Api\Infrastructure\Model\EventDispatcher\Listener\User;
-
 
 use Api\Model\User\Entity\User\Event\UserCreated;
 
@@ -19,10 +19,11 @@ class CreatedListener
 
     public function __invoke(UserCreated $event)
     {
-        $message = (new \Swift_Mailer('Sign Up Confirmation'))
+        $message = (new \Swift_Message('Sign Up Confirmation'))
             ->setFrom($this->from)
             ->setTo($event->email->getEmail())
-            ->setBody('Token: ' . $event->confirmToken->getToken());
+            ->setBody('Token: ' . $event->confirmToken->getToken())
+        ;
 
         if (!$this->mailer->send($message)) {
             throw new \RuntimeException('Unable to send message.');

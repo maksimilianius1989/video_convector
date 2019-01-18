@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Api\Model;
-
 
 trait EventTrait
 {
@@ -13,7 +13,7 @@ trait EventTrait
         $this->recordedEvents[] = $event;
     }
 
-    public function releaseEvent(): array
+    public function releaseEvents(): array
     {
         $events = $this->recordedEvents;
         $this->recordedEvents = [];

@@ -6,11 +6,9 @@ namespace Api\Test\Feature\Auth\SignUp;
 
 use Api\Model\User\Entity\User\ConfirmToken;
 use Api\Model\User\Entity\User\Email;
-use Api\Model\User\Entity\User\User;
-use Api\Model\User\Entity\User\UserId;
-use Api\Test\Builder\User\UserBuilder;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use Api\Test\Builder\User\UserBuilder;
 
 class ConfirmFixture extends AbstractFixture
 {
@@ -27,7 +25,7 @@ class ConfirmFixture extends AbstractFixture
         $expired = (new UserBuilder())
             ->withDate($now = new \DateTimeImmutable())
             ->withEmail(new Email('expired@example.com'))
-            ->withConfirmToken(new ConfirmToken('token', $now->modify('+1 day')))
+            ->withConfirmToken(new ConfirmToken('token', $now->modify('-1 day')))
             ->build();
 
         $manager->persist($expired);

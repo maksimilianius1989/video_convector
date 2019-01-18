@@ -25,7 +25,7 @@ return [
         );
     },
 
-    Middleware\BodyParamsMiddleware::class => function  () {
+    Middleware\BodyParamsMiddleware::class => function () {
         return new Middleware\BodyParamsMiddleware();
     },
 

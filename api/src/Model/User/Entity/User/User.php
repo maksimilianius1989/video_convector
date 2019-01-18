@@ -123,9 +123,4 @@ class User implements AggregateRoot
             $this->confirmToken = null;
         }
     }
-
-    public function releaseEvents(): array
-    {
-        // TODO: Implement releaseEvents() method.
-    }
 }

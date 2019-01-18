@@ -5,11 +5,9 @@ declare(strict_types=1);
 namespace Api\Test\Unit\Model\User\Entity\User;
 
 use Api\Model\User\Entity\User\ConfirmToken;
-use Api\Model\User\Entity\User\Email;
 use Api\Model\User\Entity\User\User;
-use Api\Model\User\Entity\User\UserId;
-use Api\Test\Builder\User\UserBuilder;
 use PHPUnit\Framework\TestCase;
+use Api\Test\Builder\User\UserBuilder;
 
 class ConfirmTest extends TestCase
 {

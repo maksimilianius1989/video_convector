@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use Api\Infrastructure\Model\User as UserInfrastructure;
-use Api\Model\EventDispatcher;
 use Api\Model\User as UserModel;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Container\ContainerInterface;
@@ -12,7 +11,7 @@ return [
     Api\Model\Flusher::class => function (ContainerInterface $container) {
         return new Api\Infrastructure\Model\Service\DoctrineFlusher(
             $container->get(EntityManagerInterface::class),
-            $container->get(EventDispatcher::class)
+            $container->get(Api\Model\EventDispatcher::class)
         );
     },
 

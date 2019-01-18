@@ -6,11 +6,9 @@ namespace Api\Test\Feature\Auth\SignUp;
 
 use Api\Model\User\Entity\User\ConfirmToken;
 use Api\Model\User\Entity\User\Email;
-use Api\Model\User\Entity\User\User;
-use Api\Model\User\Entity\User\UserId;
-use Api\Test\Builder\User\UserBuilder;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use Api\Test\Builder\User\UserBuilder;
 
 class RequestFixture extends AbstractFixture
 {

@@ -26,12 +26,7 @@ class ConfirmAction implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $body = $this->deserialize($request);
-
-        $command = new Command();
-
-        $command->email = $body['email'] ?? '';
-        $command->token = $body['token'] ?? '';
+        $command = $this->deserialize($request);
 
         if ($errors = $this->validator->validate($command)) {
             throw new ValidationException($errors);
