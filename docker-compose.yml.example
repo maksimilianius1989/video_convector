@@ -5,7 +5,7 @@ services:
             context: ./frontend/docker
             dockerfile: nginx.docker
         volumes:
-            - ./frontend:/app/frontend
+            - ./frontend:/var/www/frontend
         depends_on:
             - api-php-fpm
         ports:
@@ -13,8 +13,8 @@ services:
     frontend-nodejs:
         image: node:10.11-jessie
         volumes:
-            - ./frontend:/app/frontend
-        working_dir: /app/frontend
+            - ./frontend:/var/www/frontend
+        working_dir: /var/www/frontend
         tty: true
 
     api-nginx:
@@ -22,7 +22,7 @@ services:
             context: ./api/docker
             dockerfile: nginx.docker
         volumes:
-            - ./api:/app/api
+            - ./api:/var/www/api
         ports:
             - "8081:80"
     api-php-fpm:
@@ -30,12 +30,38 @@ services:
             context: ./api/docker
             dockerfile: php-fpm.docker
         volumes:
-            - ./api:/app/api
+            - ./api:/var/www/api
+        depends_on:
+            - api-postgres
+            - mailer
     api-php-cli:
         build:
             context: ./api/docker
             dockerfile: php-cli.docker
         volumes:
-            - ./api:/app/api
-        working_dir: /app/api
+            - ./api:/var/www/api
+        depends_on:
+            - api-postgres
+            - mailer
+        working_dir: /var/www/api
         tty: true
+    api-postgres:
+        image: postgres:9.6-alpine
+        volumes:
+            - ./api/var/docker/postgres:/var/lib/postgresql/data
+        environment:
+            - "POSTGRES_USER=api"
+            - "POSTGRES_PASSWORD=secret"
+            - "POSTGRES_DB=api"
+        ports:
+            - "54321:5432"
+    mailer:
+        image: mailhog/mailhog
+        restart: unless-stopped
+        environment:
+            - "POSTGRES_USER=api"
+            - "POSTGRES_PASSWORD=secret"
+            - "POSTGRES_DB=api"
+        ports:
+          - "1025:1025"
+          - "8082:8025"
