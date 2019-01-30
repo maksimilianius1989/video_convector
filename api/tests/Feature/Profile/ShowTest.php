@@ -1,15 +1,15 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Api\Test\Feature\Profile;
 
-
-use Api\Test\Feature\Auth\OAuth\AuthFixture;
+use Api\Test\Feature\AuthFixture;
 use Api\Test\Feature\WebTestCase;
 
 class ShowTest extends WebTestCase
 {
-    protected function setUp (): void
+    protected function setUp(): void
     {
         $this->loadFixtures([
             'auth' => AuthFixture::class,
@@ -31,6 +31,7 @@ class ShowTest extends WebTestCase
         $response = $this->get('/profile', $fixture->getHeaders());
 
         self::assertEquals(200, $response->getStatusCode());
+
         self::assertJson($content = $response->getBody()->getContents());
 
         $data = json_decode($content, true);
@@ -45,3 +46,4 @@ class ShowTest extends WebTestCase
         return $this->getFixture('auth');
     }
 }
+

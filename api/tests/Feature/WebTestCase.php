@@ -71,13 +71,13 @@ class WebTestCase extends TestCase
                 $fixture = new $class;
             }
             $loader->addFixture($fixture);
-            $this->fixtures[$name] = $fixtures;
+            $this->fixtures[$name] = $fixture;
         }
         $executor = new ORMExecutor($em, new ORMPurger($em));
         $executor->execute($loader->getFixtures());
     }
 
-    protected function getFixture ($name)
+    protected function getFixture($name)
     {
         if (!array_key_exists($name, $this->fixtures)) {
             throw new \InvalidArgumentException('Undefined fixture ' . $name);

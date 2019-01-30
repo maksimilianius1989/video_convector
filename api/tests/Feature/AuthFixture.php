@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Api\Test\Feature;
-
 
 use Api\Model\OAuth\Entity\AccessTokenEntity;
 use Api\Model\OAuth\Entity\ClientEntity;
@@ -35,6 +35,7 @@ class AuthFixture extends AbstractFixture
 
         $token = new AccessTokenEntity();
         $token->setIdentifier(bin2hex(random_bytes(40)));
+        $token->setUserIdentifier($user->getId()->getId());
         $token->setExpiryDateTime(new \DateTime('+1 hour'));
         $token->setClient(new ClientEntity('app'));
         $token->addScope(new ScopeEntity('common'));
