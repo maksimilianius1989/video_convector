@@ -3,11 +3,14 @@
 declare(strict_types=1);
 
 use Api\Http\Action;
+use Api\Http\Action\Auth\OAuthAction;
 use Api\Http\Middleware;
 use Api\Http\Validator\Validator;
 use Api\Model;
 use Doctrine\Common\Annotations\AnnotationRegistry;
+use League\OAuth2\Server\AuthorizationServer;
 use Psr\Container\ContainerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -54,4 +57,11 @@ return [
             $container->get(Validator::class)
         );
     },
+
+    OAuthAction::class => function  (ContainerInterface $container) {
+        return new OAuthAction(
+            $container->get(AuthorizationServer::class),
+            $container->get(LoggerInterface::class)
+        );
+    }
 ];
