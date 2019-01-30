@@ -1,106 +1,89 @@
 <?php
 
+declare(strict_types=1);
 
-use Api\Infrastructure\Model\OAuth\Entity\AccessTokenRepository;
-use Api\Infrastructure\Model\OAuth\Entity\AuthCodeRepository;
-use Api\Infrastructure\Model\OAuth\Entity\ClientRepository;
-use Api\Infrastructure\Model\OAuth\Entity\RefreshTokenRepository;
-use Api\Infrastructure\Model\OAuth\Entity\ScopeRepository;
-use Api\Infrastructure\Model\OAuth\Entity\UserRepository;
 use Api\Model\User\Service\PasswordHasher;
 use Doctrine\ORM\EntityManagerInterface;
-use League\OAuth2\Server\AuthorizationServer;
-use League\OAuth2\Server\CryptKey;
-use League\OAuth2\Server\Grant\AuthCodeGrant;
-use League\OAuth2\Server\Grant\ClientCredentialsGrant;
-use League\OAuth2\Server\Grant\ImplicitGrant;
-use League\OAuth2\Server\Grant\PasswordGrant;
-use League\OAuth2\Server\Grant\RefreshTokenGrant;
-use League\OAuth2\Server\Middleware\ResourceServerMiddleware;
-use League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface;
-use League\OAuth2\Server\Repositories\AuthCodeRepositoryInterface;
-use League\OAuth2\Server\Repositories\ClientRepositoryInterface;
-use League\OAuth2\Server\Repositories\RefreshTokenRepositoryInterface;
-use League\OAuth2\Server\Repositories\ScopeRepositoryInterface;
-use League\OAuth2\Server\Repositories\UserRepositoryInterface;
-use League\OAuth2\Server\ResourceServer;
+use League\OAuth2\Server;
+use Api\Infrastructure\Model\OAuth as Infrastructure;
 use Psr\Container\ContainerInterface;
 
 return [
-    AuthorizationServer::class => function  (ContainerInterface $container) {
+    Server\AuthorizationServer::class => function (ContainerInterface $container)
+    {
         $config = $container->get('config')['oauth'];
 
-        $clientRepository = $container->get(ClientRepositoryInterface::class);
-        $scopeRepository = $container->get(ScopeRepositoryInterface::class);
-        $accessTokenRepository = $container->get(AccessTokenRepositoryInterface::class);
-        $authCodeRepository = $container->get(AuthCodeRepositoryInterface::class);
-        $refreshTokenRepository = $container->get(RefreshTokenRepositoryInterface::class);
-        $userRepository = $container->get(UserRepositoryInterface::class);
+        $clientRepository = $container->get(Server\Repositories\ClientRepositoryInterface::class);
+        $scopeRepository = $container->get(Server\Repositories\ScopeRepositoryInterface::class);
+        $accessTokenRepository = $container->get(Server\Repositories\AccessTokenRepositoryInterface::class);
+        $authCodeRepository = $container->get(Server\Repositories\AuthCodeRepositoryInterface::class);
+        $refreshTokenRepository = $container->get(Server\Repositories\RefreshTokenRepositoryInterface::class);
+        $userRepository = $container->get(Server\Repositories\UserRepositoryInterface::class);
 
-        $server = new AuthorizationServer(
+        $server = new Server\AuthorizationServer(
             $clientRepository,
             $accessTokenRepository,
             $scopeRepository,
-            new CryptKey($config['private_key_path'], null, false),
+            new Server\CryptKey($config['private_key_path'], null, false),
             $config['encryption_key']
         );
 
-        $grant = new AuthCodeGrant($authCodeRepository, $refreshTokenRepository, new DateInterval('PT10M'));
-        $server->enableGrantType($grant, new DateInterval('PT1H'));
+        $grant = new Server\Grant\AuthCodeGrant($authCodeRepository, $refreshTokenRepository, new \DateInterval('PT10M'));
+        $server->enableGrantType($grant, new \DateInterval('PT1H'));
 
-        $server->enableGrantType(new ClientCredentialsGrant(), new DateInterval('PT1H'));
+        $server->enableGrantType(new Server\Grant\ClientCredentialsGrant(), new \DateInterval('PT1H'));
 
-        $server->enableGrantType(new ImplicitGrant(new DateInterval('PT1H')));
+        $server->enableGrantType(new Server\Grant\ImplicitGrant(new \DateInterval('PT1H')));
 
-        $grant = new PasswordGrant($userRepository, $refreshTokenRepository);
-        $grant->setRefreshTokenTTL(new DateInterval('P1M'));
-        $server->enableGrantType($grant, new DateInterval('PT1H'));
+        $grant = new Server\Grant\PasswordGrant($userRepository, $refreshTokenRepository);
+        $grant->setRefreshTokenTTL(new \DateInterval('P1M'));
+        $server->enableGrantType($grant, new \DateInterval('PT1H'));
 
-        $grant = new RefreshTokenGrant($refreshTokenRepository);
-        $grant->setRefreshTokenTTL(new DateInterval('P1M'));
-        $server->enableGrantType($grant, new DateInterval('PT1H'));
+        $grant = new Server\Grant\RefreshTokenGrant($refreshTokenRepository);
+        $grant->setRefreshTokenTTL(new \DateInterval('P1M'));
+        $server->enableGrantType($grant, new \DateInterval('PT1H'));
 
         return $server;
     },
-    ResourceServer::class => function  (ContainerInterface $container) {
+    Server\ResourceServer::class => function (ContainerInterface $container) {
         $config = $container->get('config')['oauth'];
 
-        $accessTokenRepository = $container->get(AccessTokenRepositoryInterface::class);
+        $accessTokenRepository = $container->get(Server\Repositories\AccessTokenRepositoryInterface::class);
 
-        return new ResourceServer(
+        return new Server\ResourceServer(
             $accessTokenRepository,
-            new CryptKey($config['public_key_path'], null, false)
+            new Server\CryptKey($config['public_key_path'], null, false)
         );
     },
-    ResourceServerMiddleware::class => function  (ContainerInterface $container) {
-        return new ResourceServerMiddleware(
-            $container->get(ResourceServer::class)
+    Server\Middleware\ResourceServerMiddleware::class => function (ContainerInterface $container) {
+        return new Server\Middleware\ResourceServerMiddleware(
+            $container->get(Server\ResourceServer::class)
         );
     },
-    ClientRepositoryInterface::class => function  (ContainerInterface $container) {
-        $container = $container->get('config')['oauth'];
-        return new ClientRepository($container['clients']);
+    Server\Repositories\ClientRepositoryInterface::class => function (ContainerInterface $container) {
+        $config = $container->get('config')['oauth'];
+        return new Infrastructure\Entity\ClientRepository($config['clients']);
     },
-    ScopeRepositoryInterface::class => function  () {
-        return new ScopeRepository();
+    Server\Repositories\ScopeRepositoryInterface::class => function () {
+        return new Infrastructure\Entity\ScopeRepository();
     },
-    AuthCodeRepositoryInterface::class => function  (ContainerInterface $container) {
-        return new AuthCodeRepository(
+    Server\Repositories\AuthCodeRepositoryInterface::class => function (ContainerInterface $container) {
+        return new Infrastructure\Entity\AuthCodeRepository(
             $container->get(EntityManagerInterface::class)
         );
     },
-    AccessTokenRepositoryInterface::class => function  (ContainerInterface $container) {
-        return new AccessTokenRepository(
+    Server\Repositories\AccessTokenRepositoryInterface::class => function (ContainerInterface $container) {
+        return new Infrastructure\Entity\AccessTokenRepository(
             $container->get(EntityManagerInterface::class)
         );
     },
-    RefreshTokenRepositoryInterface::class => function  (ContainerInterface $container) {
-        return new RefreshTokenRepository(
+    Server\Repositories\RefreshTokenRepositoryInterface::class => function (ContainerInterface $container) {
+        return new Infrastructure\Entity\RefreshTokenRepository(
             $container->get(EntityManagerInterface::class)
         );
     },
-    UserRepositoryInterface::class => function  (ContainerInterface $container) {
-        return new UserRepository(
+    Server\Repositories\UserRepositoryInterface::class => function (ContainerInterface $container) {
+        return new Infrastructure\Entity\UserRepository(
             $container->get(EntityManagerInterface::class),
             $container->get(PasswordHasher::class)
         );
@@ -113,9 +96,9 @@ return [
             'encryption_key' => getenv('API_OAUTH_ENCRYPTION_KEY'),
             'clients' => [
                 'app' => [
-                    'secret' => null,
-                    'name' => 'App',
-                    'redirect_uri' => null,
+                    'secret'          => null,
+                    'name'            => 'App',
+                    'redirect_uri'    => null,
                     'is_confidential' => false,
                 ],
             ],

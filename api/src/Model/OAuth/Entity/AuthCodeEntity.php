@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Api\Model\OAuth\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
 use League\OAuth2\Server\Entities\AuthCodeEntityInterface;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 use League\OAuth2\Server\Entities\ScopeEntityInterface;
@@ -30,7 +33,7 @@ class AuthCodeEntity implements AuthCodeEntityInterface
     protected $expiryDateTime;
 
     /**
-     * @ORM\Column(type="guid", name="user_identifiler")
+     * @ORM\Column(type="guid", name="user_identifier")
      */
     protected $userIdentifier;
 
@@ -51,5 +54,4 @@ class AuthCodeEntity implements AuthCodeEntityInterface
      * @ORM\Id
      */
     protected $redirectUri;
-
 }

@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Api\Infrastructure\Doctrine\Type\OAuth;
-
 
 use Api\Model\OAuth\Entity\ClientEntity;
 use Doctrine\DBAL\Platforms\AbstractPlatform;

@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Api\Infrastructure\Model\OAuth\Entity;
-
 
 use Api\Model\OAuth\Entity\ScopeEntity;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
@@ -19,7 +19,7 @@ class ScopeRepository implements ScopeRepositoryInterface
     public function __construct()
     {
         $this->scopes = [
-            'common' => new ScopeEntity('common'),
+            'common' => new ScopeEntity('common')
         ];
     }
 
@@ -30,7 +30,7 @@ class ScopeRepository implements ScopeRepositoryInterface
 
     public function finalizeScopes(array $scopes, $grantType, ClientEntityInterface $clientEntity, $userIdentifier = null): array
     {
-        return array_filter($scopes, function  (ScopeEntityInterface $scope) {
+        return array_filter($scopes, function (ScopeEntityInterface $scope) {
             foreach ($this->scopes as $item) {
                 if ($scope->getIdentifier() === $item->getIdentifier()) {
                     return true;

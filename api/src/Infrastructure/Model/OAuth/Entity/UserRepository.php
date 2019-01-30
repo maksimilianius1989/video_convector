@@ -1,17 +1,17 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Api\Infrastructure\Model\OAuth\Entity;
 
-
 use Api\Model\OAuth\Entity\UserEntity;
 use Api\Model\User\Entity\User\User;
+use Api\Model\User\Entity\User\UserRepository as ModelUserRepository;
 use Api\Model\User\Service\PasswordHasher;
 use Doctrine\ORM\EntityManagerInterface;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 use League\OAuth2\Server\Entities\UserEntityInterface;
 use League\OAuth2\Server\Repositories\UserRepositoryInterface;
-use Api\Infrastructure\Model\OAuth\Entity\UserRepository as ModelUserRepository;
 
 class UserRepository implements UserRepositoryInterface
 {
@@ -32,13 +32,13 @@ class UserRepository implements UserRepositoryInterface
 
     public function getUserEntityByUserCredentials($username, $password, $grantType, ClientEntityInterface $clientEntity): ?UserEntityInterface
     {
-        /** @var User $user $user */
+        /** @var User $user */
         if ($user = $this->repo->findOneBy(['email' => $username])) {
             if (!$this->hasher->validate($password, $user->getPasswordHash())) {
                 return null;
             }
             return new UserEntity($user->getId()->getId());
         }
-        return null;
+        return  null;
     }
 }

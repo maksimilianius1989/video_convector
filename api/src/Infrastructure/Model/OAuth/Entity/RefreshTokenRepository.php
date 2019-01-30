@@ -1,12 +1,11 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Api\Infrastructure\Model\OAuth\Entity;
 
-
 use Api\Model\OAuth\Entity\RefreshTokenEntity;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\EntityRepository;
 use League\OAuth2\Server\Entities\RefreshTokenEntityInterface;
 use League\OAuth2\Server\Exception\UniqueTokenIdentifierConstraintViolationException;
 use League\OAuth2\Server\Repositories\RefreshTokenRepositoryInterface;
@@ -14,7 +13,7 @@ use League\OAuth2\Server\Repositories\RefreshTokenRepositoryInterface;
 class RefreshTokenRepository implements RefreshTokenRepositoryInterface
 {
     /**
-     * @var EntityRepository
+     * @var \Doctrine\ORM\EntityRepository
      */
     private $repo;
     private $em;
@@ -56,9 +55,9 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
     private function exists($id): bool
     {
         return $this->repo->createQueryBuilder('t')
-            ->select('COUNT(t.identifier)')
-            ->andWhere('t.identifier = :identifier')
-            ->setParameter(':identifier', $id)
-            ->getQuery()->getSingleScalarResult() > 0;
+                ->select('COUNT(t.identifier)')
+                ->andWhere('t.identifier = :identifier')
+                ->setParameter(':identifier', $id)
+                ->getQuery()->getSingleScalarResult() > 0;
     }
 }

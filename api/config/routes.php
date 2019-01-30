@@ -22,9 +22,10 @@ return function (App $app, ContainerInterface $container) {
     $app->post('/auth/signup', Action\Auth\SignUp\RequestAction::class . ':handle');
     $app->post('/auth/signup/confirm', Action\Auth\SignUp\ConfirmAction::class . ':handle');
 
-    $app->post('/oauth/auth', Action\Auth\OAuthAction::class . '::handle');
+    $app->post('/oauth/auth', Action\Auth\OAuthAction::class . ':handle');
 
     $app->group('/profile', function () {
         $this->get('', Action\Profile\ShowAction::class . ':handle');
     })->add($auth);
+
 };

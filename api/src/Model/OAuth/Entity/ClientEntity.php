@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Api\Model\OAuth\Entity;
-
 
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 use League\OAuth2\Server\Entities\Traits\ClientTrait;
@@ -21,7 +21,6 @@ class ClientEntity implements ClientEntityInterface
     {
         $this->name = $name;
     }
-
     public function setRedirectUri($uri): void
     {
         $this->redirectUri = $uri;

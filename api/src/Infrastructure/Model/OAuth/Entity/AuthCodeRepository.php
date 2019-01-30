@@ -1,12 +1,11 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Api\Infrastructure\Model\OAuth\Entity;
 
-
 use Api\Model\OAuth\Entity\AuthCodeEntity;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\EntityRepository;
 use League\OAuth2\Server\Entities\AuthCodeEntityInterface;
 use League\OAuth2\Server\Exception\UniqueTokenIdentifierConstraintViolationException;
 use League\OAuth2\Server\Repositories\AuthCodeRepositoryInterface;
@@ -14,7 +13,7 @@ use League\OAuth2\Server\Repositories\AuthCodeRepositoryInterface;
 class AuthCodeRepository implements AuthCodeRepositoryInterface
 {
     /**
-     * @var EntityRepository
+     * @var \Doctrine\ORM\EntityRepository
      */
     private $repo;
     private $em;
@@ -40,7 +39,7 @@ class AuthCodeRepository implements AuthCodeRepositoryInterface
         $this->em->flush();
     }
 
-    public function revokeAuthCode($tokenId)
+    public function revokeAuthCode($tokenId): void
     {
         if ($token = $this->repo->find($tokenId)) {
             $this->em->remove($token);
@@ -56,9 +55,9 @@ class AuthCodeRepository implements AuthCodeRepositoryInterface
     private function exists($id): bool
     {
         return $this->repo->createQueryBuilder('t')
-            ->select('COUNT(t.identifier)')
-            ->andWhere('t.identifier = :identifier')
-            ->setParameter(':identifier', $id)
-            ->getQuery()->getSingleScalarResult() > 0;
+                ->select('COUNT(t.identifier)')
+                ->andWhere('t.identifier = :identifier')
+                ->setParameter(':identifier', $id)
+                ->getQuery()->getSingleScalarResult() > 0;
     }
 }

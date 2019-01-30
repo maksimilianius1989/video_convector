@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Api\Infrastructure\Model\OAuth\Entity;
-
 
 use Api\Model\OAuth\Entity\ClientEntity;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
@@ -17,7 +17,7 @@ class ClientRepository implements ClientRepositoryInterface
         $this->clients = $clients;
     }
 
-    public function getClientEntity($clientIdentifier, $grantType = null, $clientSecret = null, $mustValidateSecret = true): ?ClientRepositoryInterface
+    public function getClientEntity($clientIdentifier, $grantType = null, $clientSecret = null, $mustValidateSecret = true): ?ClientEntityInterface
     {
         if (array_key_exists($clientIdentifier, $this->clients) === false) {
             return null;

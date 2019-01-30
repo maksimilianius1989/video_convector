@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Api\Infrastructure\Doctrine\Type\OAuth;
 
-
 use Api\Model\OAuth\Entity\ScopeEntity;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\JsonType;
@@ -24,12 +23,12 @@ class ScopesType extends JsonType
 
     public function convertToPHPValue($value, AbstractPlatform $platform)
     {
-        $value = parent::convertToPHPValue($value, $platform);
+        $values = parent::convertToPHPValue($value, $platform);
 
-        if ($value) {
+        if ($values) {
             return array_map(function ($value) {
                 return new ScopeEntity($value);
-            }, $value);
+            }, $values);
         }
 
         return [];

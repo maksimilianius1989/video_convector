@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Api\Model\OAuth\Entity;
 
-
+use Doctrine\ORM\Mapping as ORM;
 use League\OAuth2\Server\Entities\AccessTokenEntityInterface;
 use League\OAuth2\Server\Entities\RefreshTokenEntityInterface;
 use League\OAuth2\Server\Entities\Traits\EntityTrait;
