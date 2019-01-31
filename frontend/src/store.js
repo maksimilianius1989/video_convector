@@ -10,7 +10,7 @@ export default new Vuex.Store({
     user: JSON.parse(localStorage.getItem('user')),
   },
   getters: {
-    isLoggerIn(state) {
+    isLoggedIn(state) {
       return !!state.user;
     }
   },
@@ -19,6 +19,9 @@ export default new Vuex.Store({
       state.currentEmail = email;
     },
     login(state, user) {
+      state.user = user;
+    },
+    logout(state) {
       state.user = null;
     }
   },
@@ -37,15 +40,15 @@ export default new Vuex.Store({
           .then(response => {
             const user = response.data;
             localStorage.setItem('user', JSON.stringify(user));
-            axios.defaults.headers.common['Authorization'] = 'Bearer ' + user.access_type;
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' + user.access_token;
             context.commit('login', user);
             resolve(user)
           })
-            .catch(error => {
-              context.commit('logout');
-              localStorage.removeItem('user');
-              reject(error);
-            })
+          .catch(error => {
+            context.commit('logout');
+            localStorage.removeItem('user');
+            reject(error)
+          })
       })
     },
     logout(context) {
@@ -53,7 +56,7 @@ export default new Vuex.Store({
         context.commit('logout');
         localStorage.removeItem('user');
         delete axios.defaults.headers.common['Authorization'];
-        resolve();
+        resolve()
       });
     },
     refresh(context) {
@@ -66,17 +69,17 @@ export default new Vuex.Store({
             client_id: 'app',
             client_secret: '',
           })
-              .then(response => {
-                const user = response.data;
-                localStorage.setItem('user', JSON.stringify(user));
-                axios.defaults.headers.common['Authorization'] = 'Bearer ' + user.access_token;
-                context.commit('login', user);
-                resolve(response)
-              })
-              .catch(error => {
-                context.dispatch('logout');
-                reject(error)
-              })
+            .then(response => {
+              const user = response.data;
+              localStorage.setItem('user', JSON.stringify(user));
+              axios.defaults.headers.common['Authorization'] = 'Bearer ' + user.access_token;
+              context.commit('login', user);
+              resolve(response)
+            })
+            .catch(error => {
+              context.dispatch('logout');
+              reject(error)
+            })
         }
         resolve()
       });

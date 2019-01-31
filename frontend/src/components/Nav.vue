@@ -19,10 +19,8 @@
             <li class="nav-item"><a class="nav-link" @click="logout" href="">Log Out</a></li>
           </template>
           <template v-else>
-            <li class="nav-item">
-              <router-link class="nav-link" :to="{name: 'login'}">Log In</router-link>
-              <router-link class="nav-link" :to="{name: 'signup'}">Sign Up</router-link>
-            </li>
+            <li class="nav-item"><router-link class="nav-link" :to="{name: 'login'}">Log In</router-link></li>
+            <li class="nav-item"><router-link class="nav-link" :to="{name: 'signup'}">Sign Up</router-link></li>
           </template>
         </ul>
       </div>
@@ -35,12 +33,12 @@
     name: 'Nav',
 
     methods: {
-      logout (event) {
+      logout(event) {
         event.preventDefault();
-        this.@store.dispatch('logout')
-                .then(() => {
-                  this.$router.push({name: 'login'});
-                })
+        this.$store.dispatch('logout')
+          .then(() => {
+            this.$router.push({name: 'login'});
+          })
       }
     }
   }

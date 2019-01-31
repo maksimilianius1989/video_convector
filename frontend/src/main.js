@@ -11,7 +11,7 @@ axios.defaults.baseURL = process.env.VUE_APP_API_URL;
 
 let user = JSON.parse(localStorage.getItem('user'));
 if (user) {
-    axios.defaults.headers.common['Authorization'] = 'Bearer ' + user.access_token;
+  axios.defaults.headers.common['Authorization'] = 'Bearer ' + user.access_token;
 }
 
 axios.interceptors.response.use(null, error => {
@@ -26,17 +26,17 @@ axios.interceptors.response.use(null, error => {
     }
   }
   return store.dispatch('refresh')
-      .then(() => {
-        return new Promise((resolve) => {
-          request.headers['Authorization'] = 'Bearer ' + store.state.user.access_type;
-          resolve(axios(request))
-        })
+    .then(() => {
+      return new Promise((resolve) => {
+        request.headers['Authorization'] = 'Bearer ' + store.state.user.access_token;
+        resolve(axios(request))
       })
-      .catch(() => {
-        router.push({name: 'login'});
-        return Promise.reject(error);
-      });
-})
+    })
+    .catch(() => {
+      router.push({name: 'login'});
+      return Promise.reject(error)
+    });
+});
 
 Vue.use(BootstrapVue);
 

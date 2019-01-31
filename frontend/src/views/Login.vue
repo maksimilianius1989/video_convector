@@ -47,7 +47,7 @@
           })
           .catch(error => {
             if (error.response) {
-                this.error = error.response.data.error;
+              this.error = error.response.data.error;
             } else {
               console.log(error.message);
             }
